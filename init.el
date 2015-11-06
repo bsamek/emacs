@@ -13,14 +13,17 @@
 
 
 ;; packages
+(use-package diminish)
+
 (use-package ido
-  :config
-  (ido-mode 1))
+  :config (ido-mode 1))
 
 (use-package powerline
-  :config
-  (powerline-default-theme))
+  :config (powerline-default-theme))
 
+(use-package auto-complete
+  :diminish auto-complete-mode
+  :init (ac-config-default))
 
-;; ui
-(load-theme 'leuven)
+(use-package solarized-theme
+  :config (load-theme 'solarized-dark t))
