@@ -1,0 +1,176 @@
+;;; Set up ELPA
+
+(package-initialize)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(when (not package-archive-contents) (package-refresh-contents))
+
+(unless (package-installed-p 'use-package)
+  (message "`use-package' not found. Installing...")
+  (package-install 'use-package))
+(require 'use-package)
+
+(defun use-package-always-ensure (form)
+  (append form '(:ensure t)))
+(advice-add #'use-package :filter-args #'use-package-always-ensure)
+
+
+;;; Configure individual packages
+
+(use-package ace-jump-mode
+  :bind
+  ("C-." . ace-jump-word-mode))
+
+(if (eq system-type 'gnu/linux)
+    (use-package tex-site
+      :ensure auctex))
+
+(use-package auto-complete
+  :diminish auto-complete-mode
+  :init (ac-config-default))
+
+(use-package browse-kill-ring
+  :bind ("C-c y" . browse-kill-ring))
+
+(use-package diminish
+  :config
+  (progn
+    (eval-after-load "whitespace" '(diminish 'whitespace-mode))))
+
+(use-package emmet-mode
+  :diminish emmet-mode
+  :init
+  (progn
+    (add-hook 'sgml-mode-hook 'emmet-mode)
+    (add-hook 'css-mode-hook 'emmet-mode)))
+
+(use-package epa
+  :init (epa-file-enable))
+
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
+
+(use-package flycheck
+  :bind ("C-c f" . global-flycheck-mode))
+
+(use-package guide-key
+  :diminish guide-key-mode
+  :init
+  (progn
+    (setq guide-key/guide-key-sequence t)
+    (guide-key-mode 1)))
+
+(use-package helm
+  :diminish helm-mode
+  :init
+  (progn
+    (helm-mode 1)
+    (define-key helm-find-files-map
+      (kbd "<tab>") 'helm-execute-persistent-action)
+    (define-key helm-find-files-map (kbd "<tab>") 'helm-execute-persistent-action)
+    (define-key helm-find-files-map (kbd "C-z") 'helm-select-action))
+  :bind
+  (("C-x C-f" . helm-find-files)
+   ("C-x b" . helm-buffers-list)
+   ("M-x" . helm-M-x)))
+
+(use-package helm-projectile)
+
+;; (use-package magit
+;;   :diminish magit-auto-revert-mode)
+
+(use-package org
+  :bind
+  (("C-c a" . org-agenda)
+   ("C-c b" . org-iswitchb)
+   ("C-c l" . org-store-link))
+  :init
+  (progn
+    (setq org-startup-indented t)
+    (setq org-log-done 'time)))
+
+(use-package paredit
+  :diminish paredit-mode
+  :init
+  (progn
+    (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+    (add-hook 'lisp-mode-hook 'enable-paredit-mode)))
+
+(use-package powerline
+  :init (powerline-default-theme))
+
+(use-package projectile
+  :diminish projectile-mode
+  :init (projectile-global-mode))
+
+(use-package slime
+  :init
+  (progn
+    (setq inferior-lisp-program "sbcl")
+    (setq slime-contribs '(slime-fancy))))
+
+(use-package sr-speedbar)
+
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :init (global-undo-tree-mode))
+
+(use-package winner
+  :init (winner-mode 1))
+
+;; (use-package yasnippet
+;;   :diminish yas-minor-mode
+;;   :idle
+;;   :init (yas-global-mode 1))
+
+
+;;; Customize UI
+
+(setq inhibit-splash-screen t
+      initial-scratch-message nil)
+
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode 1)
+
+(if (eq system-type 'gnu/linux)
+    (set-face-attribute 'default nil
+			:family "Inconsolata"
+			:height 120))
+
+(if (eq system-type 'windows-nt)
+    (set-face-attribute 'default nil
+			:family "Consolas"
+			:height 105))
+
+;; (load-theme 'leuven t)
+
+;;; Customize behavior
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+(server-start)
+(setq user-full-name "Brian Samek")
+(setq user-mail-address "brian.samek@gmail.com")
+
+
+;;; Custom functions
+
+(defun untabify-buffer ()
+  (untabify (point-min) (point-max)))
+(defun indent-buffer ()
+  (indent-region (point-min) (point-max)))
+(defun cleanup-buffer ()
+  "Untabify, indent, and delete trailing whitespace in buffer."
+  (interactive)
+  (untabify-buffer)
+  (delete-trailing-whitespace)
+  (indent-buffer)
+  (message "Done cleaning up buffer"))
+
+
+;;; Custom bindings
+
+(global-set-key (kbd "C-c d") 'describe-personal-keybindings)
+(global-set-key (kbd "C-c h") 'helm-projectile)
+(global-set-key (kbd "C-c m") 'magit-status)
+(global-set-key (kbd "C-c n") 'cleanup-buffer)
