@@ -15,7 +15,8 @@
 ;; gui
 (setq inhibit-startup-screen t)
 (tool-bar-mode -1)
-      
+
+
 ;; packages
 (use-package diminish)
 
@@ -32,4 +33,5 @@
 (use-package solarized-theme
   :config (load-theme 'solarized-dark t))
 
-(use-package magit)
+(use-package magit
+  :bind ("C-x g" . magit-status))
