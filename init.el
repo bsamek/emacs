@@ -5,12 +5,22 @@
 (unless package-archive-contents (package-refresh-contents))
 (package-initialize)
 
+
 ;; use-package
 (unless (package-installed-p 'use-package) (package-install 'use-package))
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+
 ;; packages
 (use-package ido
   :config
   (ido-mode 1))
+
+(use-package powerline
+  :config
+  (powerline-default-theme))
+
+
+;; ui
+(load-theme 'leuven)
