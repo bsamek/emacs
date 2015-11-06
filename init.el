@@ -12,6 +12,10 @@
 (setq use-package-always-ensure t)
 
 
+;; gui
+(setq inhibit-startup-screen t)
+(tool-bar-mode -1)
+      
 ;; packages
 (use-package diminish)
 
