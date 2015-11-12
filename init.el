@@ -55,7 +55,10 @@
 
 (use-package slime
   :init (setq slime-lisp-implementations
-	      '((sbcl  ("/usr/local/bin/sbcl")))))
+                    (case system-type
+				  ('gnu/linux '((sbcl  ("/usr/local/bin/sbcl"))))
+				  ('darwin '((sbcl  ("/usr/local/bin/sbcl"))))
+				  ('windows-nt '((sbcl ("\\Program Files\\Steel Bank Common Lisp\\1.3.0\\sbcl.exe")))))))
 
 (use-package smex
   :bind ("M-x" . smex))
