@@ -15,7 +15,7 @@
 ;; gui
 (setq inhibit-startup-screen t)
 (tool-bar-mode -1)
-
+(scroll-bar-mode -1)
 
 ;; packages
 (use-package diminish)
