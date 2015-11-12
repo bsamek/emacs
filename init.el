@@ -59,3 +59,6 @@
 
 (use-package smex
   :bind ("M-x" . smex))
+
+(use-package winner
+  :init (winner-mode 1))
