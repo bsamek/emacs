@@ -50,4 +50,9 @@
   :bind ("C-x g" . magit-status))
 
 (use-package evil
-  :config (evil-mode 1))
+  :config (evil-mode 1)
+  :diminish undo-tree-mode)
+
+(use-package slime
+  :init (setq slime-lisp-implementations
+	      '((sbcl  ("/usr/local/bin/sbcl")))))
