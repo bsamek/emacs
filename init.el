@@ -36,8 +36,8 @@
 (use-package ido
   :config (ido-mode 1))
 
-(use-package powerline
-  :config (powerline-center-evil-theme))
+(use-package powerline)
+;;  :config (powerline-center-evil-theme))
 
 (use-package auto-complete
   :diminish auto-complete-mode
@@ -49,8 +49,15 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
-(use-package evil
-  :config (evil-mode 1)
+;; (use-package evil
+;;   :config (evil-mode 1)
+;;   :diminish undo-tree-mode)
+
+(use-package god-mode
+  :bind ("<escape>" . god-mode-all))
+
+(use-package undo-tree
+  :config (global-undo-tree-mode)
   :diminish undo-tree-mode)
 
 (use-package slime
@@ -67,4 +74,4 @@
   :init (winner-mode 1))
 
 (use-package ace-jump-mode
-  :bind ("C-c SPC" . ace-jump-mode))
+  :bind ("C-." . ace-jump-mode))
