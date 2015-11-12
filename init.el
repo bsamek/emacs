@@ -1,3 +1,6 @@
+(require 'cl)
+
+
 ;; melpa
 (require 'package)
 (add-to-list 'package-archives
@@ -16,6 +19,15 @@
 (setq inhibit-startup-screen t)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(set-face-attribute 'default nil
+                    :family (case system-type
+				  ('gnu/linux "Inconsolata")
+				  ('darwin "Menlo")
+				  ('windows-nt "Consolas"))
+		    :height (case system-type
+				  ('gnu/linux 130)
+				  ('darwin 140)
+				  ('windows-nt 110)))
 
 
 ;; packages
