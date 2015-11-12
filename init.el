@@ -56,3 +56,6 @@
 (use-package slime
   :init (setq slime-lisp-implementations
 	      '((sbcl  ("/usr/local/bin/sbcl")))))
+
+(use-package smex
+  :bind ("M-x" . smex))
