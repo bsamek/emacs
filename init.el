@@ -37,7 +37,7 @@
   :config (ido-mode 1))
 
 (use-package powerline
-  :config (powerline-default-theme))
+  :config (powerline-center-evil-theme))
 
 (use-package auto-complete
   :diminish auto-complete-mode
