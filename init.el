@@ -65,3 +65,6 @@
 
 (use-package winner
   :init (winner-mode 1))
+
+(use-package ace-jump-mode
+  :bind ("C-c SPC" . ace-jump-mode))
