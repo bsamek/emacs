@@ -44,11 +44,20 @@
 (use-package diminish)
 
 (use-package evil
-  :config (evil-mode 1)
+  :config
+  (evil-mode 1)
+  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
   :diminish undo-tree-mode)
 
 (use-package evil-surround
   :config (global-evil-surround-mode 1))
+
+(use-package key-chord
+  :config
+  (setq key-chord-one-key-delay .2)
+  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+;  (key-chord-define evil-normal-state-map "<space>" 'ace-jump-mode)
+  (key-chord-mode 1))
 
 (use-package ido
   :config (ido-mode 1))
