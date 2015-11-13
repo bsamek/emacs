@@ -31,31 +31,27 @@
 
 
 ;; packages
-(use-package diminish)
-
-(use-package ido
-  :config (ido-mode 1))
-
-(use-package powerline
- :config (powerline-center-evil-theme))
+(use-package ace-jump-mode
+  :bind ("C-c SPC" . ace-jump-mode))
 
 (use-package auto-complete
   :diminish auto-complete-mode
   :init (ac-config-default))
 
-(use-package solarized-theme
-  :config (load-theme 'solarized-dark t))
-
-(use-package magit
-  :bind ("C-x g" . magit-status))
+(use-package diminish)
 
 (use-package evil
   :config (evil-mode 1)
   :diminish undo-tree-mode)
 
-(use-package undo-tree
-  :config (global-undo-tree-mode)
-  :diminish undo-tree-mode)
+(use-package ido
+  :config (ido-mode 1))
+
+(use-package magit
+  :bind ("C-x g" . magit-status))
+
+(use-package powerline
+ :config (powerline-center-evil-theme))
 
 (use-package slime
   :init (setq slime-lisp-implementations
@@ -67,8 +63,12 @@
 (use-package smex
   :bind ("M-x" . smex))
 
+(use-package solarized-theme
+  :config (load-theme 'solarized-dark t))
+
+(use-package undo-tree
+  :config (global-undo-tree-mode)
+  :diminish undo-tree-mode)
+
 (use-package winner
   :init (winner-mode 1))
-
-(use-package ace-jump-mode
-  :bind ("C-." . ace-jump-mode))
