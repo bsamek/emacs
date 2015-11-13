@@ -1,21 +1,7 @@
 (require 'cl)
 
+;;; The GUI
 
-;; melpa
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(unless package-archive-contents (package-refresh-contents))
-(package-initialize)
-
-
-;; use-package
-(unless (package-installed-p 'use-package) (package-install 'use-package))
-(require 'use-package)
-(setq use-package-always-ensure t)
-
-
-;; gui
 (setq inhibit-startup-screen t)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -30,7 +16,24 @@
 				  ('windows-nt 110)))
 
 
-;; packages
+
+
+;;; Set up use-package
+
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(unless package-archive-contents (package-refresh-contents))
+(package-initialize)
+(unless (package-installed-p 'use-package) (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+
+
+
+;;; Packages
+
 (use-package ace-jump-mode
   :bind ("C-c SPC" . ace-jump-mode))
 
