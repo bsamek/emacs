@@ -45,7 +45,7 @@
   :diminish undo-tree-mode)
 
 (use-package evil-surround
-  :config (global-evil-surround-mode 1)
+  :config (global-evil-surround-mode 1))
 
 (use-package ido
   :config (ido-mode 1))
