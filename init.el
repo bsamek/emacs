@@ -53,6 +53,12 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
+(use-package paredit
+  :diminish paredit-mode
+  :config
+  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+  (add-hook 'lisp-mode-hook 'enable-paredit-mode))
+
 (use-package powerline
  :config (powerline-center-evil-theme))
 
