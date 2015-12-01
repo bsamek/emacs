@@ -56,6 +56,8 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
+(use-package monokai-theme)
+
 (use-package powerline
  :config (powerline-center-evil-theme))
 
