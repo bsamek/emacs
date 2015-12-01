@@ -44,6 +44,11 @@
 (use-package evil-surround
   :config (global-evil-surround-mode 1))
 
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize)))
+
 (use-package guide-key
   :config
   (guide-key-mode 1)
