@@ -71,16 +71,11 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
-(use-package monokai-theme)
-
 (use-package powerline
  :config (powerline-center-evil-theme))
 
 (use-package smex
   :bind ("M-x" . smex))
-
-(use-package solarized-theme
-  :config (load-theme 'solarized-dark t))
 
 (use-package undo-tree
   :config (global-undo-tree-mode)
@@ -90,3 +85,10 @@
   :init (winner-mode 1))
 
 (use-package yaml-mode)
+
+
+;;; Themes
+(use-package monokai-theme)
+(use-package solarized-theme)
+(load-theme 'monokai t)
+
