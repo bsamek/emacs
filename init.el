@@ -51,7 +51,12 @@
   (key-chord-mode 1))
 
 (use-package ido
-  :config (ido-mode 1))
+  :config
+  (ido-mode 1)
+  (ido-everywhere 1))
+
+(use-package ido-ubiquitous
+  :config (ido-ubiquitous-mode 1))
 
 (use-package magit
   :bind ("C-x g" . magit-status))
