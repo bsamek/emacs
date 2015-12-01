@@ -71,8 +71,18 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
+(use-package markdown-mode
+  :mode
+  (("\\.md\\'" . markdown-mode)
+  ("\\.mdwn\\'" . markdown-mode)
+  ("\\.markdown\\'" . markdown-mode)))
+
 (use-package powerline
  :config (powerline-center-evil-theme))
+
+(use-package projectile
+  :config
+  (projectile-global-mode))
 
 (use-package smex
   :bind ("M-x" . smex))
