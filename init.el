@@ -73,3 +73,5 @@
 
 (use-package winner
   :init (winner-mode 1))
+
+(use-package yaml-mode)
