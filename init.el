@@ -56,19 +56,22 @@
   (guide-key-mode 1)
   (setq guide-key/guide-key-sequence t))
 
+(use-package helm
+  :config (helm-mode 1))
+
 (use-package key-chord
   :config
   (setq key-chord-one-key-delay .2)
   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
   (key-chord-mode 1))
 
-(use-package ido
-  :config
-  (ido-mode 1)
-  (ido-everywhere 1))
+;; (use-package ido
+;;   :config
+;;   (ido-mode 1)
+;;   (ido-everywhere 1))
 
-(use-package ido-ubiquitous
-  :config (ido-ubiquitous-mode 1))
+;; (use-package ido-ubiquitous
+;;   :config (ido-ubiquitous-mode 1))
 
 (use-package magit
   :bind ("C-x g" . magit-status))
@@ -88,8 +91,8 @@
   :config
   (projectile-global-mode))
 
-(use-package smex
-  :bind ("M-x" . smex))
+;; (use-package smex
+;;   :bind ("M-x" . smex))
 
 (use-package undo-tree
   :config (global-undo-tree-mode)
@@ -105,4 +108,3 @@
 (use-package monokai-theme)
 (use-package solarized-theme)
 (load-theme 'monokai t)
-
