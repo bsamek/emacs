@@ -77,6 +77,8 @@
   ("\\.mdwn\\'" . markdown-mode)
   ("\\.markdown\\'" . markdown-mode)))
 
+(use-package neotree)
+
 (use-package powerline
  :config (powerline-center-evil-theme))
 
