@@ -44,6 +44,11 @@
 (use-package evil-surround
   :config (global-evil-surround-mode 1))
 
+(use-package guide-key
+  :config
+  (guide-key-mode 1)
+  (setq guide-key/guide-key-sequence t))
+
 (use-package key-chord
   :config
   (setq key-chord-one-key-delay .2)
