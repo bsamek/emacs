@@ -1,7 +1,6 @@
 (require 'cl)
 
 ;;; The GUI
-
 (setq inhibit-startup-screen t)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -16,10 +15,7 @@
 				  ('windows-nt 110)))
 
 
-
-
 ;;; Set up use-package
-
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
@@ -30,12 +26,8 @@
 (setq use-package-always-ensure t)
 
 
-
-
 ;;; Packages
-
-(use-package ace-jump-mode
-  :bind ("C-c SPC" . ace-jump-mode))
+(use-package ace-jump-mode)
 
 (use-package auto-complete
   :diminish auto-complete-mode
@@ -56,7 +48,6 @@
   :config
   (setq key-chord-one-key-delay .2)
   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-;  (key-chord-define evil-normal-state-map "<space>" 'ace-jump-mode)
   (key-chord-mode 1))
 
 (use-package ido
@@ -65,21 +56,8 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
-(use-package paredit
-  :diminish paredit-mode
-  :config
-  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-  (add-hook 'lisp-mode-hook 'enable-paredit-mode))
-
 (use-package powerline
  :config (powerline-center-evil-theme))
-
-(use-package slime
-  :init (setq slime-lisp-implementations
-                    (case system-type
-				  ('gnu/linux '((sbcl  ("/usr/local/bin/sbcl"))))
-				  ('darwin '((sbcl  ("/usr/local/bin/sbcl"))))
-				  ('windows-nt '((sbcl ("\\Program Files\\Steel Bank Common Lisp\\1.3.0\\sbcl.exe")))))))
 
 (use-package smex
   :bind ("M-x" . smex))
