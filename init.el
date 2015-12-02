@@ -52,6 +52,7 @@
 (use-package go-mode)
 
 (use-package guide-key
+  :diminish guide-key-mode
   :config
   (guide-key-mode 1)
   (setq guide-key/guide-key-sequence t))
@@ -59,6 +60,8 @@
 (use-package helm
   :diminish helm-mode
   :config (helm-mode 1))
+
+(use-package helm-projectile)
 
 (use-package key-chord
   :config
@@ -90,7 +93,9 @@
 
 (use-package projectile
   :config
-  (projectile-global-mode))
+  (projectile-global-mode)
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on))
 
 ;; (use-package smex
 ;;   :bind ("M-x" . smex))
