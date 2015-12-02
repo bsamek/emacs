@@ -57,6 +57,7 @@
   (setq guide-key/guide-key-sequence t))
 
 (use-package helm
+  :diminish helm-mode
   :config (helm-mode 1))
 
 (use-package key-chord
