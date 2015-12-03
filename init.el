@@ -110,7 +110,10 @@
 (use-package yaml-mode)
 
 
-;;; Themes
+;;; Appearance
 (use-package monokai-theme)
 (use-package solarized-theme)
-(load-theme 'monokai t)
+(load-theme 'solarized-dark t)
+(set-frame-parameter (selected-frame) 'alpha '(95 90))
+(add-to-list 'default-frame-alist '(alpha 95 90))
+
