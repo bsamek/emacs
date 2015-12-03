@@ -33,6 +33,9 @@
   :diminish auto-complete-mode
   :init (ac-config-default))
 
+(use-package browse-kill-ring
+  :bind ("C-c k" . browse-kill-ring))
+
 (use-package diminish)
 
 (use-package evil
@@ -114,8 +117,8 @@
 (use-package monokai-theme)
 (use-package solarized-theme)
 (load-theme 'solarized-dark t)
-(set-frame-parameter (selected-frame) 'alpha '(95 90))
-(add-to-list 'default-frame-alist '(alpha 95 90))
+(set-frame-parameter (selected-frame) 'alpha '(90 90))
+(add-to-list 'default-frame-alist '(alpha 90 90))
 
 
 ;;; Bindings
