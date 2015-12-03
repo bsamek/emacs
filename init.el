@@ -78,7 +78,7 @@
 ;;   :config (ido-ubiquitous-mode 1))
 
 (use-package magit
-  :bind ("C-x g" . magit-status))
+  :bind ("C-c g" . magit-status))
 
 (use-package markdown-mode
   :mode
@@ -116,4 +116,9 @@
 (load-theme 'solarized-dark t)
 (set-frame-parameter (selected-frame) 'alpha '(95 90))
 (add-to-list 'default-frame-alist '(alpha 95 90))
+
+
+;;; Bindings
+(global-set-key (kbd "C-c r") 'rgrep)
+(global-set-key (kbd "C-c o") 'occur)
 
