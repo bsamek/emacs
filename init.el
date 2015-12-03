@@ -112,6 +112,10 @@
 
 (use-package yaml-mode)
 
+(use-package yasnippet
+  :config (yas-global-mode 1)
+  :diminish yas-minor-mode)
+
 
 ;;; Appearance
 (use-package monokai-theme)
