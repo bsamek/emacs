@@ -111,6 +111,9 @@
   :config (global-undo-tree-mode)
   :diminish undo-tree-mode)
 
+(use-package window-numbering
+  :config (window-numbering-mode 1))
+  
 (use-package winner
   :init (winner-mode 1))
 
