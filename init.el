@@ -54,6 +54,10 @@
 
 (use-package go-mode)
 
+(use-package golden-ratio
+  :config (golden-ratio-mode 1)
+  :diminish golden-ratio-mode)
+
 (use-package guide-key
   :diminish guide-key-mode
   :config
