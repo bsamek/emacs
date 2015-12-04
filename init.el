@@ -55,6 +55,7 @@
 (use-package go-mode)
 
 (use-package golden-ratio
+  :init (setq golden-ratio-auto-scale t)
   :config (golden-ratio-mode 1)
   :diminish golden-ratio-mode)
 
