@@ -41,8 +41,31 @@
 (use-package evil
   :config
   (evil-mode 1)
-  (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
+  ; (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
   :diminish undo-tree-mode)
+
+(use-package evil-leader
+  :config
+  (global-evil-leader-mode)
+  (evil-leader/set-leader "<SPC>")
+  (evil-leader/set-key
+    "<SPC>" 'ace-jump-mode
+    "0" 'select-window-0
+    "1" 'select-window-1
+    "2" 'select-window-2
+    "3" 'select-window-3
+    "4" 'select-window-4
+    "5" 'select-window-5
+    "6" 'select-window-6
+    "7" 'select-window-7
+    "8" 'select-window-8
+    "9" 'select-window-9
+    "b" 'browse-kill-ring
+    "g" 'magit-status
+    "i" 'indent-region
+    "o" 'occur
+    "p" 'projectile-command-map
+    "r" 'rgrep)) 
 
 (use-package evil-surround
   :config (global-evil-surround-mode 1))
