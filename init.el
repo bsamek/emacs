@@ -75,6 +75,10 @@
   (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize)))
 
+(use-package flycheck
+  :config
+  (global-flycheck-mode 1))
+
 (use-package go-mode)
 
 (use-package golden-ratio
