@@ -41,7 +41,6 @@
 (use-package evil
   :config
   (evil-mode 1)
-  ; (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
   :diminish undo-tree-mode)
 
 (use-package evil-leader
@@ -138,14 +137,6 @@
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
   (key-chord-mode 1))
 
-;; (use-package ido
-;;   :config
-;;   (ido-mode 1)
-;;   (ido-everywhere 1))
-
-;; (use-package ido-ubiquitous
-;;   :config (ido-ubiquitous-mode 1))
-
 (use-package magit
   :bind ("C-c g" . magit-status))
 
@@ -165,9 +156,6 @@
   (projectile-global-mode)
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
-
-;; (use-package smex
-;;   :bind ("M-x" . smex))
 
 (use-package undo-tree
   :config (global-undo-tree-mode)
@@ -192,9 +180,3 @@
 (load-theme 'solarized-dark t)
 (set-frame-parameter (selected-frame) 'alpha '(90 90))
 (add-to-list 'default-frame-alist '(alpha 90 90))
-
-
-;;; Bindings
-(global-set-key (kbd "C-c r") 'rgrep)
-(global-set-key (kbd "C-c o") 'occur)
-
