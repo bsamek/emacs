@@ -82,7 +82,8 @@
     "sg" 'rgrep
     "so" 'occur
     "xs" 'shell
-    "xx" 'execute-extended-command)) 
+    "xx" 'execute-extended-command
+    "z" 'evil-emacs-state)) 
 
 
 (use-package evil-surround
