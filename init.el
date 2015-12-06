@@ -60,12 +60,25 @@
     "7" 'select-window-7
     "8" 'select-window-8
     "9" 'select-window-9
-    "b" 'browse-kill-ring
+    "cc" 'flycheck-buffer
+    "cf" 'flycheck-mode
+    "e" 'evil-emacs-state
+    "ff" 'find-file
+    "fs" 'save-buffer
     "g" 'magit-status
+    "hb" 'describe-bindings
+    "hf" 'describe-function
+    "hi" 'info
+    "hk" 'describe-key
+    "hv" 'describe-variable
     "i" 'indent-region
-    "o" 'occur
+    "k" 'browse-kill-ring
+    "o" 'other-window
     "p" 'projectile-command-map
-    "r" 'rgrep)) 
+    "r" 'rgrep
+    "so" 'occur
+    "x" 'execute-extended-command)) 
+
 
 (use-package evil-surround
   :config (global-evil-surround-mode 1))
