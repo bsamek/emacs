@@ -1,19 +1,5 @@
 (require 'cl)
 
-;;; The GUI
-(setq inhibit-startup-screen t)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(set-face-attribute 'default nil
-                    :family (case system-type
-				  ('gnu/linux "Inconsolata")
-				  ('darwin "Menlo")
-				  ('windows-nt "Consolas"))
-		    :height (case system-type
-				  ('gnu/linux 130)
-				  ('darwin 140)
-				  ('windows-nt 110)))
-
 
 ;;; Set up use-package
 (require 'package)
@@ -180,5 +166,17 @@
 (use-package monokai-theme)
 (use-package solarized-theme)
 (load-theme 'solarized-dark t)
-(set-frame-parameter (selected-frame) 'alpha '(90 90))
-(add-to-list 'default-frame-alist '(alpha 90 90))
+(set-frame-parameter (selected-frame) 'alpha '(95 90))
+(add-to-list 'default-frame-alist '(alpha 95 90))
+(setq inhibit-startup-screen t)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(set-face-attribute 'default nil
+                    :family (case system-type
+				  ('gnu/linux "Inconsolata")
+				  ('darwin "Menlo")
+				  ('windows-nt "Consolas"))
+		    :height (case system-type
+				  ('gnu/linux 130)
+				  ('darwin 140)
+				  ('windows-nt 110)))
