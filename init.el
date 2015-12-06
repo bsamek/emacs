@@ -116,7 +116,7 @@
 (use-package key-chord
   :config
   (setq key-chord-one-key-delay .2)
-  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
   (key-chord-mode 1))
 
 ;; (use-package ido
