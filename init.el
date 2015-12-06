@@ -62,7 +62,12 @@
     "9" 'select-window-9
     "cc" 'flycheck-buffer
     "cf" 'flycheck-mode
+    "cn" 'flycheck-next-error
+    "cp" 'flycheck-previous-error
+    "cs" 'flycheck-select-checker
+    "cv" 'flycheck-verify-setup
     "e" 'evil-emacs-state
+    "fb" 'switch-to-buffer
     "ff" 'find-file
     "fs" 'save-buffer
     "g" 'magit-status
@@ -75,9 +80,10 @@
     "k" 'browse-kill-ring
     "o" 'other-window
     "p" 'projectile-command-map
-    "r" 'rgrep
+    "sg" 'rgrep
     "so" 'occur
-    "x" 'execute-extended-command)) 
+    "xs" 'shell
+    "xx" 'execute-extended-command)) 
 
 
 (use-package evil-surround
