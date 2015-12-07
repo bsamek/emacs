@@ -47,15 +47,16 @@
     "9" 'select-window-9
     "ad" 'dired
     "as" 'shell
+    "bb" 'switch-to-buffer
+    "br" 'rename-buffer
+    "bs" 'save-buffer
     "cc" 'flycheck-buffer
     "cf" 'flycheck-mode
     "cn" 'flycheck-next-error
     "cp" 'flycheck-previous-error
     "cs" 'flycheck-select-checker
     "cv" 'flycheck-verify-setup
-    "fb" 'switch-to-buffer
     "ff" 'find-file
-    "fs" 'save-buffer
     "g" 'magit-status
     "hb" 'describe-bindings
     "hf" 'describe-function
@@ -70,6 +71,7 @@
     "so" 'occur
     "tf" 'toggle-frame-fullscreen
     "tm" 'toggle-frame-maximized
+    "tr" 'rainbow-delimiters-mode
     "tt" 'helm-themes
     "u" 'undo-tree-visualize
     "x" 'execute-extended-command
