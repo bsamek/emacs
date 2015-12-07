@@ -148,6 +148,8 @@
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))
 
+(use-package rainbow-delimiters)
+
 (use-package undo-tree
   :config (global-undo-tree-mode)
   :diminish undo-tree-mode)
