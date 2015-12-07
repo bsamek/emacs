@@ -68,6 +68,9 @@
     "p" 'projectile-command-map
     "sg" 'rgrep
     "so" 'occur
+    "tf" 'toggle-frame-fullscreen
+    "tm" 'toggle-frame-maximized
+    "tt" 'helm-themes
     "u" 'undo-tree-visualize
     "x" 'execute-extended-command
     "z" 'evil-emacs-state)) 
@@ -163,7 +166,8 @@
 
 
 ;;; Appearance
-(use-package monokai-theme)
+(use-package helm-themes)
+(use-package sublime-themes)
 (use-package solarized-theme)
 (load-theme 'solarized-dark t)
 (set-frame-parameter (selected-frame) 'alpha '(95 90))
@@ -171,12 +175,13 @@
 (setq inhibit-startup-screen t)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(menu-bar-mode -1)
 (set-face-attribute 'default nil
                     :family (case system-type
 				  ('gnu/linux "Inconsolata")
 				  ('darwin "Menlo")
 				  ('windows-nt "Consolas"))
 		    :height (case system-type
-				  ('gnu/linux 130)
+				  ('gnu/linux 120)
 				  ('darwin 140)
 				  ('windows-nt 110)))
