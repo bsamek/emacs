@@ -87,8 +87,8 @@
   (exec-path-from-shell-initialize)))
 
 (use-package flycheck
-  :config
-  (global-flycheck-mode 1))
+  :config (global-flycheck-mode 1)
+  :diminish flycheck-mode)
 
 (use-package go-mode)
 
@@ -173,9 +173,8 @@
 (use-package helm-themes)
 (use-package sublime-themes)
 (use-package solarized-theme)
-(load-theme 'solarized-dark t)
-(set-frame-parameter (selected-frame) 'alpha '(95 90))
-(add-to-list 'default-frame-alist '(alpha 95 90))
+(use-package monokai-theme)
+(load-theme 'monokai t)
 (setq inhibit-startup-screen t)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
