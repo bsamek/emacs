@@ -15,6 +15,10 @@
 ;;; Packages
 (use-package ace-jump-mode)
 
+(use-package anzu
+  :diminish anzu-mode
+  :config (global-anzu-mode 1))
+
 (use-package auto-complete
   :diminish auto-complete-mode
   :init (ac-config-default))
