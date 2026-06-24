@@ -1,0 +1,59 @@
+name: Test
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  fresh-machine:
+    name: Fresh machine (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Emacs on macOS
+        if: runner.os == 'macOS'
+        run: brew install --cask emacs
+
+      - name: Install Emacs on Linux
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y emacs
+
+      - name: Print Emacs version
+        run: emacs --version
+
+      - name: Test fresh setup
+        shell: bash
+        run: |
+          set -o pipefail
+
+          export HOME="$RUNNER_TEMP/emacs-home"
+          export EMACS_INHIBIT_NATIVE_COMPILE=1
+          mkdir -p "$HOME/.emacs.d"
+          ln -s "$GITHUB_WORKSPACE/init.el" "$HOME/.emacs.d/init.el"
+
+          log="$RUNNER_TEMP/emacs-startup.log"
+          emacs --batch \
+            --eval "(when (boundp 'native-comp-jit-compilation) (setq native-comp-jit-compilation nil))" \
+            --eval "(when (boundp 'native-comp-deferred-compilation) (setq native-comp-deferred-compilation nil))" \
+            --eval "(when (boundp 'native-comp-enable-subr-trampolines) (setq native-comp-enable-subr-trampolines nil))" \
+            --eval "(when (boundp 'no-native-compile) (setq no-native-compile t))" \
+            --eval "(when (boundp 'load-no-native) (setq load-no-native t))" \
+            -l "$HOME/.emacs.d/init.el" \
+            --eval '(message "init loaded")' 2>&1 | tee "$log"
+
+          if grep -E '(⛔ Warning|Warning|Error|Failed to|Cannot open load file)' "$log"; then
+            echo "::error::Emacs startup produced warnings or errors."
+            exit 1
+          fi
