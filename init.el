@@ -214,7 +214,8 @@
 (use-package xclip
   :ensure t
   :config
-  (xclip-mode 1))
+  (when (executable-find "xclip")
+    (xclip-mode 1)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
