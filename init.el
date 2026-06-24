@@ -139,6 +139,13 @@
   (setq completion-styles '(orderless basic)
         completion-category-overrides '((file (styles partial-completion)))))
 
+;; Embark-consult — integration between Embark and Consult
+;; Declared before Consult loads so first-run installs avoid Embark's warning.
+(use-package embark-consult
+  :after (embark consult)
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
 ;; Consult — enhanced search and navigation commands
 (use-package consult
   :after general
@@ -157,12 +164,6 @@
   :bind
   (("C-." . embark-act)
    ("C-;" . embark-dwim)))
-
-;; Embark-consult — integration between Embark and Consult
-(use-package embark-consult
-  :after (embark consult)
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; Corfu — in-buffer completion popup
 (use-package corfu
