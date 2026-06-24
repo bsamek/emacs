@@ -1,12 +1,21 @@
+# Backup and autosave files
 *~
-ac-comphist.dat
+\#*\#
+.\#*
+
+# Generated package/runtime state
 auto-save-list/
+eln-cache/
 elpa/
-flycheck_init.el
-ido.last
+transient/
 eshell/
 server/
+url/
+recentf
+
+# Legacy generated state from older versions of this config
+ac-comphist.dat
+flycheck_init.el
+ido.last
 smex-items
 projectile-bookmarks.eld
-recentf
-url/

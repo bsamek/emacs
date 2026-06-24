@@ -1,194 +1,207 @@
-(require 'cl)
-
-
-;;; Set up use-package
+;; Package archives
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(unless package-archive-contents (package-refresh-contents))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-(unless (package-installed-p 'use-package) (package-install 'use-package))
+
+;; Minimal GUI chrome
+(when (display-graphic-p)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (menu-bar-mode -1))
+
+(add-to-list 'default-frame-alist '(tool-bar-lines . 0))
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(add-to-list 'default-frame-alist '(menu-bar-lines . 0))
+
+;; use-package (built in since Emacs 29)
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; macOS GUI apps do not inherit the shell PATH by default.
+(when (memq window-system '(mac ns))
+  (use-package exec-path-from-shell
+    :pin melpa
+    :config
+    (exec-path-from-shell-initialize)))
 
-;;; Packages
-(use-package ace-jump-mode)
+;; macOS: use Option as Meta
+(setq mac-option-modifier 'meta)
 
-(use-package anzu
-  :diminish anzu-mode
-  :config (global-anzu-mode 1))
+;; Isearch — built-in match counts
+(setq isearch-lazy-count t)
 
-(use-package auto-complete
-  :diminish auto-complete-mode
-  :init (ac-config-default))
+;; Must be set before evil or evil-collection load.
+(setq evil-want-keybinding nil)
 
-(use-package browse-kill-ring
-  :bind ("C-c k" . browse-kill-ring))
-
-(use-package diminish)
-
+;; Evil — Vim emulation
 (use-package evil
+  :init
+  (setq evil-want-C-u-scroll t)    ;; restore C-u for half-page scroll
   :config
-  (evil-mode 1)
-  :diminish undo-tree-mode)
+  (evil-mode 1))
 
-(use-package evil-leader
+;; Evil-collection — Vim keybindings across Emacs (dired, magit, etc.)
+(use-package evil-collection
+  :after evil
   :config
-  (global-evil-leader-mode)
-  (evil-leader/set-leader "<SPC>")
-  (evil-leader/set-key
-    "<SPC>" 'ace-jump-mode
-    "0" 'select-window-0
-    "1" 'select-window-1
-    "2" 'select-window-2
-    "3" 'select-window-3
-    "4" 'select-window-4
-    "5" 'select-window-5
-    "6" 'select-window-6
-    "7" 'select-window-7
-    "8" 'select-window-8
-    "9" 'select-window-9
-    "ad" 'dired
-    "as" 'shell
-    "bb" 'switch-to-buffer
-    "br" 'rename-buffer
-    "bs" 'save-buffer
-    "cc" 'flycheck-buffer
-    "cf" 'flycheck-mode
-    "cn" 'flycheck-next-error
-    "cp" 'flycheck-previous-error
-    "cs" 'flycheck-select-checker
-    "cv" 'flycheck-verify-setup
-    "ff" 'find-file
-    "g" 'magit-status
-    "hb" 'describe-bindings
-    "hf" 'describe-function
-    "hi" 'info
-    "hk" 'describe-key
-    "hv" 'describe-variable
-    "i" 'indent-region
-    "k" 'browse-kill-ring
-    "o" 'other-window
-    "p" 'projectile-command-map
-    "sg" 'rgrep
-    "so" 'occur
-    "tf" 'toggle-frame-fullscreen
-    "tm" 'toggle-frame-maximized
-    "tr" 'rainbow-delimiters-mode
-    "tt" 'helm-themes
-    "u" 'undo-tree-visualize
-    "x" 'execute-extended-command
-    "z" 'evil-emacs-state)) 
+  (evil-collection-init))
 
+;; which-key — popup showing available keys after a prefix
+(use-package which-key
+  :init (which-key-mode 1))
 
-(use-package evil-surround
-  :config (global-evil-surround-mode 1))
-
-(use-package exec-path-from-shell
+;; general — declarative leader-key bindings
+(use-package general
+  :after evil
   :config
-  (when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize)))
+  (general-create-definer my/leader
+    :states '(normal visual)
+    :keymaps 'override
+    :prefix "SPC")
 
-(use-package flycheck
-  :config (global-flycheck-mode 1)
-  :diminish flycheck-mode)
+  (my/leader
+    "SPC" '(execute-extended-command :which-key "M-x")
+    "f"  '(:ignore t :which-key "files")
+    "ff" '(find-file :which-key "find file")
+    "fs" '(save-buffer :which-key "save")
+    "b"  '(:ignore t :which-key "buffers")
+    "bb" '(consult-buffer :which-key "switch")
+    "bk" '(kill-buffer :which-key "kill")
+    "w"  '(evil-window-map :which-key "window")))
 
-(use-package go-mode)
-
-(use-package golden-ratio
+;; Project — built-in project navigation
+(use-package project
+  :ensure nil
+  :after general
   :config
-  (golden-ratio-mode 1)
-  (setq golden-ratio-extra-commands
-	(append golden-ratio-extra-commands
-		'(evil-window-left
-		  evil-window-right
-		  evil-window-up
-		  evil-window-down
-		  select-window-1
-		  select-window-2
-		  select-window-3
-		  select-window-4
-		  select-window-5
-		  select-window-6
-		  select-window-7
-		  select-window-8
-		  select-window-9)))
-  :diminish golden-ratio-mode)
+  (my/leader
+    "p"  '(:ignore t :which-key "project")
+    "pb" '(project-switch-to-buffer :which-key "buffer")
+    "pf" '(project-find-file :which-key "find file")
+    "pk" '(project-kill-buffers :which-key "kill buffers")
+    "pp" '(project-switch-project :which-key "switch")
+    "ps" '(project-shell-command :which-key "shell command")))
 
-(use-package guide-key
-  :diminish guide-key-mode
+;; Flymake — built-in diagnostics
+(use-package flymake
+  :ensure nil
+  :after general
   :config
-  (guide-key-mode 1)
-  (setq guide-key/guide-key-sequence t))
+  (my/leader
+    "d"  '(:ignore t :which-key "diagnostics")
+    "dd" '(flymake-show-buffer-diagnostics :which-key "buffer diagnostics")
+    "dp" '(flymake-show-project-diagnostics :which-key "project diagnostics")
+    "dn" '(flymake-goto-next-error :which-key "next diagnostic")
+    "dN" '(flymake-goto-prev-error :which-key "previous diagnostic")))
 
-(use-package helm
-  :diminish helm-mode
-  :config (helm-mode 1))
-
-(use-package helm-projectile)
-
-(use-package key-chord
+;; Eglot — built-in LSP client
+(use-package eglot
+  :ensure nil
+  :after general
   :config
-  (setq key-chord-one-key-delay .2)
-  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-  (key-chord-mode 1))
+  (my/leader
+    "dl" '(eglot :which-key "start LSP")
+    "dr" '(eglot-rename :which-key "rename")
+    "da" '(eglot-code-actions :which-key "code actions")
+    "df" '(eglot-format :which-key "format")))
 
-(use-package magit
-  :bind ("C-c g" . magit-status))
+;; Avy — fast visible-text jumping
+(use-package avy
+  :after general
+  :config
+  (avy-setup-default)
 
+  (my/leader
+    "j"  '(:ignore t :which-key "jump")
+    "jj" '(avy-goto-char-timer :which-key "jump by text")
+    "jc" '(avy-goto-char-2 :which-key "jump to chars")
+    "jl" '(avy-goto-line :which-key "jump to line")
+    "jw" '(avy-goto-word-1 :which-key "jump to word")
+    "jr" '(avy-resume :which-key "resume jump")))
+
+;; Vertico — vertical completion UI
+(use-package vertico
+  :init (vertico-mode 1))
+
+;; Marginalia — annotations in the minibuffer
+(use-package marginalia
+  :init (marginalia-mode 1))
+
+;; Orderless — fuzzy / space-separated matching
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless basic)
+        completion-category-overrides '((file (styles partial-completion)))))
+
+;; Consult — enhanced search and navigation commands
+(use-package consult
+  :after general
+  :config
+  (my/leader
+    "g"  '(:ignore t :which-key "goto")
+    "fr" '(consult-recent-file :which-key "recent file")
+    "s"  '(:ignore t :which-key "search")
+    "sg" '(consult-ripgrep :which-key "ripgrep")
+    "sl" '(consult-line :which-key "line")
+    "si" '(consult-imenu :which-key "imenu")
+    "gl" '(consult-goto-line :which-key "goto line")))
+
+;; Embark — context actions for minibuffer candidates and text at point
+(use-package embark
+  :bind
+  (("C-." . embark-act)
+   ("C-;" . embark-dwim)))
+
+;; Embark-consult — integration between Embark and Consult
+(use-package embark-consult
+  :after (embark consult)
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+;; Corfu — in-buffer completion popup
+(use-package corfu
+  :init
+  (global-corfu-mode 1))
+
+;; Cape — completion-at-point extensions
+(use-package cape
+  :after general
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  :config
+  (my/leader
+    "c"  '(:ignore t :which-key "complete")
+    "cf" '(cape-file :which-key "file")
+    "cd" '(cape-dabbrev :which-key "dabbrev")
+    "ck" '(cape-keyword :which-key "keyword")))
+
+;; Markdown — Markdown editing mode
 (use-package markdown-mode
-  :mode
-  (("\\.md\\'" . markdown-mode)
-  ("\\.mdwn\\'" . markdown-mode)
-  ("\\.markdown\\'" . markdown-mode)))
+  :mode (("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode)
+         ("README\\.md\\'" . gfm-mode)))
 
-(use-package neotree)
-
-(use-package powerline
- :config (powerline-center-evil-theme))
-
-(use-package projectile
+(use-package doom-themes
   :config
-  (projectile-global-mode)
-  (setq projectile-completion-system 'helm)
-  (helm-projectile-on))
+  (load-theme 'doom-oceanic-next t))
 
-(use-package rainbow-delimiters)
-
-(use-package undo-tree
-  :config (global-undo-tree-mode)
-  :diminish undo-tree-mode)
-
-(use-package window-numbering
-  :config (window-numbering-mode 1))
-  
-(use-package winner
-  :init (winner-mode 1))
-
-(use-package yaml-mode)
-
-(use-package yasnippet
-  :config (yas-global-mode 1)
-  :diminish yas-minor-mode)
-
-
-;;; Appearance
-(use-package helm-themes)
-(use-package sublime-themes)
-(use-package solarized-theme)
-(use-package monokai-theme)
-(load-theme 'monokai t)
-(setq inhibit-startup-screen t)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
-(set-face-attribute 'default nil
-                    :family (case system-type
-				  ('gnu/linux "Inconsolata")
-				  ('darwin "Menlo")
-				  ('windows-nt "Consolas"))
-		    :height (case system-type
-				  ('gnu/linux 120)
-				  ('darwin 140)
-				  ('windows-nt 110)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8"
+     default))
+ '(package-selected-packages
+   '(cape consult corfu doom-themes embark embark-consult evil-collection
+          exec-path-from-shell general marginalia markdown-mode oceanic-theme
+          orderless vertico)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
