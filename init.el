@@ -198,6 +198,10 @@
          ("\\.markdown\\'" . markdown-mode)
          ("README\\.md\\'" . gfm-mode)))
 
+;; Go — Go editing mode
+(use-package go-mode
+  :mode "\\.go\\'")
+
 (use-package doom-themes
   :config
   (load-theme 'doom-oceanic-next t))
