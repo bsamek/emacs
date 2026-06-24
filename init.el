@@ -23,6 +23,14 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; Let emacsclient reuse the GUI Emacs session.
+(use-package server
+  :ensure nil
+  :if (display-graphic-p)
+  :config
+  (unless (server-running-p)
+    (server-start)))
+
 ;; macOS GUI apps do not inherit the shell PATH by default.
 (when (memq window-system '(mac ns))
   (use-package exec-path-from-shell
