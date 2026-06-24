@@ -43,17 +43,33 @@ jobs:
           mkdir -p "$HOME/.emacs.d"
           ln -s "$GITHUB_WORKSPACE/init.el" "$HOME/.emacs.d/init.el"
 
+          run_emacs() {
+            emacs --batch \
+              --eval "(when (boundp 'native-comp-jit-compilation) (setq native-comp-jit-compilation nil))" \
+              --eval "(when (boundp 'native-comp-deferred-compilation) (setq native-comp-deferred-compilation nil))" \
+              --eval "(when (boundp 'native-comp-enable-subr-trampolines) (setq native-comp-enable-subr-trampolines nil))" \
+              --eval "(when (boundp 'no-native-compile) (setq no-native-compile t))" \
+              --eval "(when (boundp 'load-no-native) (setq load-no-native t))" \
+              -l "$HOME/.emacs.d/init.el" \
+              --eval '(message "init loaded")'
+          }
+
+          bootstrap_log="$RUNNER_TEMP/emacs-bootstrap.log"
+          echo "::group::Bootstrap startup"
+          run_emacs 2>&1 | tee "$bootstrap_log"
+          echo "::endgroup::"
+
+          if grep -E '(Failed to|No public key|Package .* is unavailable|Signature.*failed)' "$bootstrap_log"; then
+            echo "::error::Emacs bootstrap produced errors."
+            exit 1
+          fi
+
           log="$RUNNER_TEMP/emacs-startup.log"
-          emacs --batch \
-            --eval "(when (boundp 'native-comp-jit-compilation) (setq native-comp-jit-compilation nil))" \
-            --eval "(when (boundp 'native-comp-deferred-compilation) (setq native-comp-deferred-compilation nil))" \
-            --eval "(when (boundp 'native-comp-enable-subr-trampolines) (setq native-comp-enable-subr-trampolines nil))" \
-            --eval "(when (boundp 'no-native-compile) (setq no-native-compile t))" \
-            --eval "(when (boundp 'load-no-native) (setq load-no-native t))" \
-            -l "$HOME/.emacs.d/init.el" \
-            --eval '(message "init loaded")' 2>&1 | tee "$log"
+          echo "::group::Steady-state startup"
+          run_emacs 2>&1 | tee "$log"
+          echo "::endgroup::"
 
           if grep -E '(⛔ Warning|Warning|Error|Failed to|Cannot open load file)' "$log"; then
-            echo "::error::Emacs startup produced warnings or errors."
+            echo "::error::Emacs steady-state startup produced warnings or errors."
             exit 1
           fi
