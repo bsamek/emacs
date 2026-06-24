@@ -3,6 +3,12 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+;; Keep GNU ELPA signing keys current before packages install dependencies.
+(unless (package-installed-p 'gnu-elpa-keyring-update)
+  (unless package-archive-contents
+    (package-refresh-contents))
+  (package-install 'gnu-elpa-keyring-update))
+
 ;; Minimal GUI chrome
 (when (display-graphic-p)
   (tool-bar-mode -1)
@@ -197,8 +203,8 @@
      default))
  '(package-selected-packages
    '(cape consult corfu doom-themes embark embark-consult evil-collection
-          exec-path-from-shell general marginalia markdown-mode oceanic-theme
-          orderless vertico)))
+          exec-path-from-shell general gnu-elpa-keyring-update marginalia
+          markdown-mode oceanic-theme orderless vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
