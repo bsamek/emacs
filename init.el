@@ -176,7 +176,11 @@
 ;; Corfu — in-buffer completion popup
 (use-package corfu
   :init
-  (global-corfu-mode 1))
+  (global-corfu-mode 1)
+  :custom
+  (corfu-auto t)
+  (corfu-auto-delay 0.2)
+  (corfu-auto-prefix 2))
 
 ;; Cape — completion-at-point extensions
 (use-package cape
@@ -200,7 +204,8 @@
 
 ;; Go — Go editing mode
 (use-package go-mode
-  :mode "\\.go\\'")
+  :mode "\\.go\\'"
+  :hook (go-mode . eglot-ensure))
 
 (use-package doom-themes
   :config
@@ -214,10 +219,7 @@
  '(custom-safe-themes
    '("aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8"
      default))
- '(package-selected-packages
-   '(cape consult corfu doom-themes embark embark-consult evil-collection
-          exec-path-from-shell general gnu-elpa-keyring-update marginalia
-          markdown-mode oceanic-theme orderless vertico)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
