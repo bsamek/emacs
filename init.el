@@ -9,15 +9,16 @@
     (package-refresh-contents))
   (package-install 'gnu-elpa-keyring-update))
 
-;; Minimal GUI chrome
-(when (display-graphic-p)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (menu-bar-mode -1))
+;; Minimal UI chrome
+(menu-bar-mode -1)
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
 
+(add-to-list 'default-frame-alist '(menu-bar-lines . 0))
 (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
-(add-to-list 'default-frame-alist '(menu-bar-lines . 0))
 
 ;; use-package (built in since Emacs 29)
 (require 'use-package)
