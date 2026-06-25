@@ -197,6 +197,60 @@
     "cd" '(cape-dabbrev :which-key "dabbrev")
     "ck" '(cape-keyword :which-key "keyword")))
 
+;; Org — notes, outlines, tasks
+(use-package org
+  :ensure nil
+  :mode ("\\.org\\'" . org-mode)
+  :hook ((org-mode . visual-line-mode)
+         (org-mode . org-indent-mode))
+  :custom
+  (org-startup-indented t)
+  (org-hide-leading-stars t)
+  (org-ellipsis "...")
+  (org-adapt-indentation nil)
+  (org-return-follows-link t)
+  :config
+  (defun my/org-return-dwim ()
+    "Continue Org headings and lists when pressing RET."
+    (interactive)
+    (cond
+     ((org-at-heading-p)
+      (org-insert-heading-respect-content))
+     ((org-in-item-p)
+      (org-insert-item))
+     (t
+      (org-return-and-maybe-indent))))
+
+  (defun my/org-tab-dwim ()
+    "Indent Org headings and list items, otherwise cycle visibility."
+    (interactive)
+    (if (or (org-at-heading-p) (org-in-item-p))
+        (org-metaright)
+      (org-cycle)))
+
+  (defun my/org-backtab-dwim ()
+    "Outdent Org headings and list items, otherwise cycle globally."
+    (interactive)
+    (if (or (org-at-heading-p) (org-in-item-p))
+        (org-metaleft)
+      (org-shifttab)))
+
+  (define-key org-mode-map (kbd "RET") #'my/org-return-dwim)
+  (define-key org-mode-map (kbd "TAB") #'my/org-tab-dwim)
+  (define-key org-mode-map (kbd "<backtab>") #'my/org-backtab-dwim)
+
+  (with-eval-after-load 'evil
+    (evil-define-key '(normal insert) org-mode-map
+      (kbd "RET") #'my/org-return-dwim
+      (kbd "TAB") #'my/org-tab-dwim
+      (kbd "<backtab>") #'my/org-backtab-dwim))
+
+  (my/leader
+    "o"  '(:ignore t :which-key "org")
+    "oa" '(org-agenda :which-key "agenda")
+    "oc" '(org-capture :which-key "capture")
+    "ot" '(org-todo :which-key "todo")))
+
 ;; Markdown — Markdown editing mode
 (use-package markdown-mode
   :mode (("\\.md\\'" . markdown-mode)
