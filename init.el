@@ -148,6 +148,12 @@
   (setq completion-styles '(orderless basic)
         completion-category-overrides '((file (styles partial-completion)))))
 
+;; Recentf — track recently opened files for consult-recent-file
+(use-package recentf
+  :ensure nil
+  :init
+  (recentf-mode 1))
+
 ;; Embark-consult — integration between Embark and Consult
 ;; Declared before Consult loads so first-run installs avoid Embark's warning.
 (use-package embark-consult
