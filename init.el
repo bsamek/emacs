@@ -251,11 +251,19 @@
     "oc" '(org-capture :which-key "capture")
     "ot" '(org-todo :which-key "todo")))
 
+;; visual-fill-column — soft-wrap text at a fixed column.
+(use-package visual-fill-column
+  :hook (markdown-mode . visual-fill-column-mode)
+  :custom
+  (visual-fill-column-width 100)
+  (visual-fill-column-center-text nil))
+
 ;; Markdown — Markdown editing mode
 (use-package markdown-mode
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)
-         ("README\\.md\\'" . gfm-mode)))
+         ("README\\.md\\'" . gfm-mode))
+  :hook (markdown-mode . visual-line-mode))
 
 ;; Go — Go editing mode
 (use-package go-mode
