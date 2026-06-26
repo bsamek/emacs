@@ -16,9 +16,15 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
+(dolist (frame-param '(menu-bar-lines tool-bar-lines vertical-scroll-bars))
+  (setq default-frame-alist (assq-delete-all frame-param default-frame-alist))
+  (setq initial-frame-alist (assq-delete-all frame-param initial-frame-alist)))
 (add-to-list 'default-frame-alist '(menu-bar-lines . 0))
 (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(add-to-list 'initial-frame-alist '(menu-bar-lines . 0))
+(add-to-list 'initial-frame-alist '(tool-bar-lines . 0))
+(add-to-list 'initial-frame-alist '(vertical-scroll-bars . nil))
 
 ;; use-package (built in since Emacs 29)
 (require 'use-package)
