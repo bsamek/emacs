@@ -30,6 +30,9 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;; Follow version-controlled symlinks without prompting.
+(setq vc-follow-symlinks t)
+
 ;; Let emacsclient reuse the GUI Emacs session.
 (use-package server
   :ensure nil
