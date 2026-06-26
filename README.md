@@ -1,6 +1,19 @@
-# emacs
+# Emacs Config
 
-[![Test](https://github.com/bsamek/emacs/actions/workflows/test.yml/badge.svg)](https://github.com/bsamek/emacs/actions/workflows/test.yml)
+## Install
+
+Clone this repository, then symlink its `init.el` into your Emacs config
+directory:
+
+```sh
+git clone https://github.com/bsamek/emacs.git ~/src/emacs
+mkdir -p ~/.emacs.d
+ln -sf ~/src/emacs/init.el ~/.emacs.d/init.el
+emacs
+```
+
+On first launch, Emacs bootstraps package setup and installs the configured
+packages automatically.
 
 ## Overview
 
