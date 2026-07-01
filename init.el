@@ -224,6 +224,9 @@
   :hook ((org-mode . visual-line-mode)
          (org-mode . org-indent-mode))
   :custom
+  (org-directory (expand-file-name "~/org/"))
+  (org-default-notes-file (expand-file-name "inbox.org" org-directory))
+  (org-agenda-files (list org-directory))
   (org-startup-indented t)
   (org-hide-leading-stars t)
   (org-ellipsis "...")
@@ -269,6 +272,7 @@
     "o"  '(:ignore t :which-key "org")
     "oa" '(org-agenda :which-key "agenda")
     "oc" '(org-capture :which-key "capture")
+    "of" '((lambda () (interactive) (find-file org-directory)) :which-key "org directory")
     "ot" '(org-todo :which-key "todo")))
 
 ;; visual-fill-column — soft-wrap text at a fixed column.
