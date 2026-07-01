@@ -12,6 +12,7 @@ eshell/
 server/
 url/
 recentf
+custom.el
 
 # Legacy generated state from older versions of this config
 ac-comphist.dat
