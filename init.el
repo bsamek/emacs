@@ -96,6 +96,11 @@
     "b"  '(:ignore t :which-key "buffers")
     "bb" '(consult-buffer :which-key "switch")
     "bk" '(kill-buffer :which-key "kill")
+    "o"  '(:ignore t :which-key "org")
+    "oa" '(org-agenda :which-key "agenda")
+    "oc" '(org-capture :which-key "capture")
+    "of" '((lambda () (interactive) (require 'org) (find-file org-directory)) :which-key "org directory")
+    "ot" '((lambda () (interactive) (require 'org) (call-interactively #'org-todo)) :which-key "todo")
     "w"  '(evil-window-map :which-key "window")))
 
 ;; Project — built-in project navigation
@@ -266,14 +271,7 @@
     (evil-define-key '(normal insert) org-mode-map
       (kbd "RET") #'my/org-return-dwim
       (kbd "TAB") #'my/org-tab-dwim
-      (kbd "<backtab>") #'my/org-backtab-dwim))
-
-  (my/leader
-    "o"  '(:ignore t :which-key "org")
-    "oa" '(org-agenda :which-key "agenda")
-    "oc" '(org-capture :which-key "capture")
-    "of" '((lambda () (interactive) (find-file org-directory)) :which-key "org directory")
-    "ot" '(org-todo :which-key "todo")))
+      (kbd "<backtab>") #'my/org-backtab-dwim)))
 
 ;; visual-fill-column — soft-wrap text at a fixed column.
 (use-package visual-fill-column

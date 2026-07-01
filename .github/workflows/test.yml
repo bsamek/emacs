@@ -51,7 +51,8 @@ jobs:
               --eval "(when (boundp 'no-native-compile) (setq no-native-compile t))" \
               --eval "(when (boundp 'load-no-native) (setq load-no-native t))" \
               -l "$HOME/.emacs.d/init.el" \
-              --eval '(message "init loaded")'
+              --eval '(message "init loaded")' \
+              "$@"
           }
 
           bootstrap_log="$RUNNER_TEMP/emacs-bootstrap.log"
@@ -73,3 +74,16 @@ jobs:
             echo "::error::Emacs steady-state startup produced warnings or errors."
             exit 1
           fi
+
+          leader_log="$RUNNER_TEMP/emacs-leader-keys.log"
+          echo "::group::Leader key self-test"
+          run_emacs \
+            --eval '(progn
+                      (require (quote evil))
+                      (unless (where-is-internal (quote org-agenda) nil t)
+                        (error "Missing leader binding for org-agenda"))
+                      (unless (where-is-internal (quote org-capture) nil t)
+                        (error "Missing leader binding for org-capture"))
+                      (message "leader keys available"))' \
+            2>&1 | tee "$leader_log"
+          echo "::endgroup::"
